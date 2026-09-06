@@ -1,0 +1,33 @@
+<section style="padding:0 0 100px">
+  <div class="wrap yk-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="rv" style="background:var(--t);color:var(--cream);border-radius:24px;padding:38px" data-pincode-wrap>
+      <h3 style="font-size:38px;margin-bottom:9px">When will it reach me?</h3>
+      <p style="margin:0 0 22px;font-size:15px;opacity:.9;max-width:360px">Enter your pincode. Metro orders before 2pm ship the same day.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input placeholder="e.g. 380015" maxlength="6" style="border:none;border-radius:999px;padding:15px 20px;font:600 15px/1 var(--font-body);width:180px;color:var(--ink);outline:none">
+        <button type="button" data-pincode-check class="btn btn-outline-invert btn-sm">Check</button>
+      </div>
+      <div data-pincode-msg style="margin-top:17px;font-family:var(--font-script);font-size:22px;min-height:30px"></div>
+    </div>
+    <div class="rv" style="background:var(--p);color:var(--cream);border-radius:24px;padding:38px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.75">Bulk & corporate</div>
+        <h3 style="font-size:38px;margin:10px 0 11px">{{ section.settings.heading }}</h3>
+        <p style="margin:0;font-size:15px;opacity:.9;max-width:390px">{{ section.settings.body }}</p>
+      </div>
+      <a href="{{ section.settings.link }}" class="btn btn-accent" style="align-self:flex-start;margin-top:26px">Request a quote</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Delivery + bulk CTA",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Bulk heading", "default": "500 hampers, one invoice" },
+    { "type": "textarea", "id": "body", "label": "Bulk body", "default": "Diwali boxes, joining kits, hotel amenity jars. Custom sleeves from 250 units, GST invoicing, pan-India dispatch." },
+    { "type": "url", "id": "link", "label": "Bulk link" }
+  ],
+  "presets": [{ "name": "Delivery + bulk CTA" }]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": {} },
+    "badges": { "type": "trust-badges", "settings": {} },
+    "moment": { "type": "shop-by-moment", "settings": {} },
+    "shelf": {
+      "type": "product-shelf",
+      "settings": { "collection": "all", "limit": 16 }
+    },
+    "box": {
+      "type": "build-your-box",
+      "settings": { "collection": "all", "slots": 6, "slots_per_row": 6 }
+    },
+    "occasion": { "type": "shop-by-occasion", "settings": {} },
+    "nutrition": { "type": "nutrition-table", "settings": {} },
+    "reviews": { "type": "testimonials", "settings": {} },
+    "recipes": { "type": "recipes-pairings", "settings": {} },
+    "founders": { "type": "founders-story", "settings": {} },
+    "delivery": {
+      "type": "delivery-bulk",
+      "settings": { "link": "/pages/gifting" }
+    },
+    "instagram": { "type": "instagram-feed", "settings": {} },
+    "seo": { "type": "seo-content", "settings": {} },
+    "faq": { "type": "faq", "settings": {} },
+    "newsletter": { "type": "newsletter", "settings": {} }
+  },
+  "order": [
+    "hero", "badges", "moment", "shelf", "box", "occasion", "nutrition",
+    "reviews", "recipes", "founders", "delivery", "instagram", "seo", "faq", "newsletter"
+  ]
+}

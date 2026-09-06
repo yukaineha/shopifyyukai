@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "policy-content",
+      "settings": {
+        "heading": "Return & refund policy",
+        "updated": "Last updated: September 2026",
+        "body": "<p>We want you to be satisfied with every jar. This policy explains when a return is accepted and how refunds are processed.</p><h2>Eligibility</h2><ul><li>Unopened items in original packaging can be returned within 7 days of delivery</li><li>Opened food items cannot be returned unless the product is defective or damaged in transit</li><li>Gift hampers and corporate bulk orders are final sale once dispatched, unless damaged</li></ul><h2>Damaged or incorrect orders</h2><p>If your order arrives damaged, incorrect, or missing an item, contact us within 48 hours of delivery with your order number and a photo. We will send a replacement or issue a full refund at no extra cost.</p><h2>How to request a return</h2><p>Write to support@yukaifoodroots.com or use the contact form on our help centre with your order number and reason for return. We will confirm eligibility and share the next steps within one business day.</p><h2>Refunds</h2><p>Once a return is approved and received, refunds are processed to the original payment method within 5 to 7 business days. Cash on delivery orders are refunded via bank transfer or UPI.</p><h2>Non-returnable items</h2><ul><li>Opened jars and sachets, except where defective</li><li>Items marked final sale at checkout</li><li>Products past their return window</li></ul><h2>Questions</h2><p>Reach us at support@yukaifoodroots.com or +91 98765 43210, Monday to Saturday, 10am to 6pm IST.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

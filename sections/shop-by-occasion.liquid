@@ -1,0 +1,56 @@
+<section style="padding:100px 0">
+  <div class="wrap">
+    <div class="rv" style="margin-bottom:36px">
+      <div class="yk-kicker" style="color:var(--o)">{{ section.settings.kicker }}</div>
+      <h2 class="yk-h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1.25fr .875fr .875fr;gap:14px" class="yk-grid-3">
+      {%- assign fallback_occ = 'occasion-gifting.jpg,occasion-office.jpg,occasion-travel.jpg' | split: ',' -%}
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="rv" style="display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border-radius:22px;min-height:330px;padding:28px;color:var(--cream);background:{{ block.settings.color }};transition:transform .55s var(--ease)">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 900 }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;mix-blend-mode:luminosity">
+          {%- elsif fallback_occ[forloop.index0] -%}
+            <img src="{{ fallback_occ[forloop.index0] | asset_url }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;mix-blend-mode:luminosity">
+          {%- endif -%}
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,{{ block.settings.color }}f2,{{ block.settings.color }}55)"></div>
+          <div style="position:relative">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.8">{{ block.settings.kicker }}</div>
+            <h3 style="font-size:36px;margin:9px 0 9px;color:var(--cream)">{{ block.settings.title }}</h3>
+            <p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;opacity:.92;max-width:330px">{{ block.settings.body }}</p>
+            <span style="font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:2px solid rgba(255,250,243,.5);padding-bottom:3px">{{ block.settings.cta }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by occasion",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Pick the reason, we'll pick the jars" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by occasion" }
+  ],
+  "blocks": [
+    { "type": "occasion", "name": "Occasion", "settings": [
+      { "type": "text", "id": "kicker", "label": "Kicker" },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "body", "label": "Body" },
+      { "type": "text", "id": "cta", "label": "CTA label" },
+      { "type": "url", "id": "link", "label": "Link" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "color", "id": "color", "label": "Color", "default": "#663988" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "occasion", "settings": { "kicker": "Festive", "title": "Gifting", "body": "Diwali hampers and wedding favours in brand-coloured sleeves, ready to send.", "cta": "See hampers", "color": "#663988" } },
+      { "type": "occasion", "settings": { "kicker": "Weekdays", "title": "Office drawer", "body": "The 4pm problem, solved. Six-jar subscriptions billed monthly.", "cta": "Set up a plan", "color": "#19B1C1" } },
+      { "type": "occasion", "settings": { "kicker": "On the move", "title": "Travel & tiffin", "body": "Screw-lid jars and 30 g sachets that survive a backpack.", "cta": "Shop travel packs", "color": "#E06126" } }
+    ]
+  },
+  "presets": [{ "name": "Shop by occasion" }]
+}
+{% endschema %}

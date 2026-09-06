@@ -1,0 +1,124 @@
+<div data-tabpanel="gifting" data-tabpanel-key="corporate">
+
+  <div style="border-bottom:1px solid rgba(23,87,45,.1);background:var(--cream)">
+    <div class="wrap yk-grid-4" style="padding-top:22px;padding-bottom:22px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+      {%- assign facts = '250:minimum units for branding:#663988,15 days:lead time, branded orders:#19B1C1,5:box formats:#E06126,GST:invoiced, input credit ready:#17572D' | split: ',' -%}
+      {%- for f in facts -%}
+        {%- assign parts = f | split: ':' -%}
+        <div>
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:1;color:{{ parts[2] }}">{{ parts[0] }}</div>
+          <div style="font-size:12.5px;color:rgba(23,87,45,.65);margin-top:5px">{{ parts[1] }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <section style="padding:90px 0 40px">
+    <div class="wrap">
+      <div class="rv" style="max-width:640px;margin-bottom:36px">
+        <div class="yk-kicker" style="color:var(--t)">For teams, clients and channel partners</div>
+        <h2 style="font-size:clamp(34px,4.4vw,64px);margin:4px 0 16px">Bulk, with your name on it</h2>
+        <p style="font-size:17px;line-height:1.7;color:rgba(23,87,45,.8);margin:0 0 12px">From 250 units we print your logo on the sleeve and lid sticker, pack to your list, and dispatch to one address or five hundred. One invoice, GST compliant.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+        {%- assign usecases = 'Festive:Diwali & New Year:The order everyone places late. Book by September and artwork gets two revision rounds.:#663988,People teams:Joining & milestone kits:Standing stock held for you, dispatched per joiner instead of one bulk drop.:#19B1C1,Hospitality:Hotel & amenity jars:Smaller 30 g jars for turndown trays and conference tables, printed with your property mark.:#E06126' | split: ',' -%}
+        {%- for uc in usecases -%}
+          {%- assign parts = uc | split: ':' -%}
+          <div class="rv" style="position:relative;overflow:hidden;border-radius:22px;background:{{ parts[3] }};color:#FFFAF3;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;padding:26px">
+            <div style="position:relative">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.8">{{ parts[0] }}</div>
+              <h3 style="font-size:30px;margin:9px 0 9px;color:#FFFAF3">{{ parts[1] }}</h3>
+              <p style="margin:0;font-size:14.5px;line-height:1.6;opacity:.92">{{ parts[2] }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:50px 0 90px">
+    <div class="wrap">
+      <h2 class="rv" style="font-size:clamp(30px,3.6vw,52px);margin-bottom:8px">Volume pricing</h2>
+      <p class="rv" style="font-size:14.5px;color:rgba(23,87,45,.6);margin:0 0 26px">Indicative slabs on a 6-jar box. Final quote depends on box format and branding.</p>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr 1fr;gap:16px;padding:0 4px 13px;border-bottom:1px solid rgba(23,87,45,.16)">
+          {%- for h in 'Quantity,Discount,Branding,Lead time' | split: ',' -%}
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(23,87,45,.55)">{{ h }}</div>
+          {%- endfor -%}
+        </div>
+        <div class="rv" style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr 1fr;gap:16px;align-items:center;padding:17px 4px;border-bottom:1px solid rgba(23,87,45,.09)">
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:21px">50–249</div><div style="font-size:15px;font-weight:700;color:rgba(23,87,45,.6)">List price</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">Unbranded box, blank card</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">5 working days</div>
+        </div>
+        <div class="rv" style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr 1fr;gap:16px;align-items:center;padding:17px 4px;border-bottom:1px solid rgba(23,87,45,.09)">
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:21px">250–499</div><div style="font-size:15px;font-weight:700;color:var(--t)">12% off</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">Printed sleeve</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">15 working days</div>
+        </div>
+        <div class="rv" style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr 1fr;gap:16px;align-items:center;padding:17px 4px;border-bottom:1px solid rgba(23,87,45,.09)">
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:21px">500–999</div><div style="font-size:15px;font-weight:700;color:var(--p)">18% off</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">Sleeve + lid stickers</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">15 working days</div>
+        </div>
+        <div class="rv" style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr 1fr;gap:16px;align-items:center;padding:17px 4px;border-bottom:1px solid rgba(23,87,45,.09)">
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:21px">1,000+</div><div style="font-size:15px;font-weight:700;color:var(--o)">Quoted</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">Full custom box</div><div style="font-size:14.5px;color:rgba(23,87,45,.75)">18 working days</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--g);color:var(--cream);padding:90px 0">
+    <div class="wrap yk-grid-2" style="display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start">
+      <div>
+        <div class="yk-kicker" style="color:var(--y)">Tell us the numbers</div>
+        <h2 style="font-size:clamp(32px,4vw,58px);margin:4px 0 18px;color:var(--cream)">Request a quote</h2>
+        <p style="font-size:16.5px;line-height:1.7;color:rgba(255,250,243,.8);margin:0 0 26px">Send the quantity, the deadline and where it needs to go. We reply with a costed sheet and a mockup of your sleeve within two working days.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          {%- assign steps = 'Send the brief:Quantity, deadline, delivery cities.,Approve the mockup:We send a costed sheet and a sleeve visual in two working days.,We pack and dispatch:One address or a spreadsheet of five hundred. One invoice either way.' | split: ',' -%}
+          {%- for s in steps -%}
+            {%- assign parts = s | split: ':' -%}
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:13px;color:var(--y);flex:none;width:22px;padding-top:3px">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+              <div>
+                <div style="font-weight:700;font-size:15px">{{ parts[0] }}</div>
+                <div style="font-size:14px;line-height:1.55;color:rgba(255,250,243,.7);margin-top:3px">{{ parts[1] }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div style="background:var(--cream);border-radius:24px;padding:32px">
+        {%- form 'contact' -%}
+          <input type="hidden" name="contact[tags]" value="corporate-gifting-quote">
+          {%- if form.posted_successfully? -%}
+            <p style="color:var(--g);font-size:15px">Thanks, we will reply within two working days.</p>
+          {%- else -%}
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+              <div style="grid-column:span 2">
+                <label style="display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(23,87,45,.6);margin-bottom:7px">Company</label>
+                <input name="contact[company]" placeholder="Company name" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:14px 16px;font-size:14.5px;color:var(--ink);background:#fff;outline:none">
+              </div>
+              <div>
+                <label style="display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(23,87,45,.6);margin-bottom:7px">Contact name</label>
+                <input name="contact[name]" placeholder="Your name" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:14px 16px;font-size:14.5px;color:var(--ink);background:#fff;outline:none">
+              </div>
+              <div>
+                <label style="display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(23,87,45,.6);margin-bottom:7px">Work email</label>
+                <input type="email" name="contact[email]" required placeholder="you@company.com" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:14px 16px;font-size:14.5px;color:var(--ink);background:#fff;outline:none">
+              </div>
+              <div style="grid-column:span 2">
+                <label style="display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(23,87,45,.6);margin-bottom:7px">Quantity & deadline</label>
+                <input name="contact[quantity]" placeholder="e.g. 400 boxes, needed by 10 Oct" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:14px 16px;font-size:14.5px;color:var(--ink);background:#fff;outline:none">
+              </div>
+              <div style="grid-column:span 2">
+                <label style="display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(23,87,45,.6);margin-bottom:7px">Anything else</label>
+                <textarea name="contact[body]" placeholder="Delivery addresses, branding notes" rows="3" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:14px 16px;font-size:14.5px;color:var(--ink);background:#fff;outline:none;resize:vertical"></textarea>
+              </div>
+              <div style="grid-column:span 2">
+                <button type="submit" class="btn btn-primary" style="background:var(--p)">Send enquiry</button>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}{ "name": "Gifting: corporate", "presets": [{ "name": "Gifting: corporate" }] }{% endschema %}

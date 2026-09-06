@@ -1,0 +1,22 @@
+{
+  "current": {
+    "color_green": "#17572D",
+    "color_yellow": "#EEBF25",
+    "color_purple": "#663988",
+    "color_orange": "#E06126",
+    "color_teal": "#19B1C1",
+    "color_cream": "#FFFAF3",
+    "social_instagram_url": "https://www.instagram.com/yukaifoodroots",
+    "free_shipping_threshold": 799
+  },
+  "presets": {
+    "Default": {
+      "color_green": "#17572D",
+      "color_yellow": "#EEBF25",
+      "color_purple": "#663988",
+      "color_orange": "#E06126",
+      "color_teal": "#19B1C1",
+      "color_cream": "#FFFAF3"
+    }
+  }
+}

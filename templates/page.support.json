@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "support-help", "settings": {} } },
+  "order": ["main"]
+}

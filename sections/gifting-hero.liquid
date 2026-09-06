@@ -1,0 +1,40 @@
+<section style="position:relative;overflow:hidden;background:var(--p);color:var(--cream)" data-tabgroup="gifting">
+  <div class="wrap yk-grid-2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr);gap:44px;align-items:center;min-height:420px">
+    <div style="padding:60px 0">
+      <div class="yk-breadcrumb" style="color:var(--cream);opacity:.85"><a href="{{ routes.root_url }}" style="color:var(--cream)">Home</a><span>/</span><span style="font-weight:700">Gifting</span></div>
+      <div class="yk-kicker">Sent, not just delivered</div>
+      <h1 style="font-size:clamp(46px,6.2vw,98px);margin:6px 0 18px;color:var(--cream)">Gifting</h1>
+      <p style="max-width:520px;font-size:17.5px;line-height:1.65;opacity:.92;margin:0 0 30px">Dry fruit and healthy snack gift hampers for Diwali, weddings and corporate gifting. Bulk orders carry your branding on the sleeve and one GST invoice, or send a ready-made hamper to a house today.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button type="button" data-tab="corporate" class="yk-gift-tab is-active">
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:22px;letter-spacing:-.02em">Corporate</div>
+          <div style="font-size:12.5px;opacity:.8;margin-top:3px">From 250 units, custom branding</div>
+        </button>
+        <button type="button" data-tab="retail" class="yk-gift-tab">
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:22px;letter-spacing:-.02em">Retail</div>
+          <div style="font-size:12.5px;opacity:.8;margin-top:3px">Ready hampers, single orders</div>
+        </button>
+      </div>
+    </div>
+    <div style="position:relative;align-self:stretch;min-height:380px">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9">
+      {%- else -%}
+        <img src="{{ 'moment-guests.jpg' | asset_url }}" alt="A YUKAI gift hamper being handed over" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9">
+      {%- endif -%}
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--p) 0%,rgba(102,57,136,0) 46%)"></div>
+    </div>
+  </div>
+</section>
+<style>
+  .yk-gift-tab{cursor:pointer;text-align:left;border:1.5px solid rgba(255,250,243,.4);background:transparent;color:var(--cream);border-radius:18px;padding:16px 22px;font-family:var(--font-body);transition:all .4s var(--ease)}
+  .yk-gift-tab.is-active{background:var(--cream);color:var(--p);border-color:var(--cream)}
+</style>
+
+{% schema %}
+{
+  "name": "Gifting hero",
+  "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }],
+  "presets": [{ "name": "Gifting hero" }]
+}
+{% endschema %}

@@ -1,0 +1,56 @@
+<section id="shelf" style="padding:90px 0 100px" data-filter-group="shelf-{{ section.id }}">
+  <div class="wrap" style="margin-bottom:30px;display:flex;align-items:flex-end;justify-content:space-between;gap:22px;flex-wrap:wrap">
+    <div class="rv">
+      <div class="yk-kicker" style="color:var(--p)">{{ section.settings.kicker }}</div>
+      <h2 class="yk-h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" class="chip is-active" data-filter-chip="all">All {{ section.settings.collection.products_count }}</button>
+      {%- for block in section.blocks -%}
+        <button type="button" class="chip" data-filter-chip="{{ block.settings.tag }}">{{ block.settings.label }}</button>
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="rail hide-scrollbar" style="display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:8px 34px 26px" data-filter-target="shelf-{{ section.id }}">
+    {%- for product in section.settings.collection.products limit: section.settings.limit -%}
+      {%- assign tag_match = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if product.tags contains block.settings.tag -%}{%- assign tag_match = tag_match | append: block.settings.tag | append: ',' -%}{%- endif -%}
+      {%- endfor -%}
+      <div data-filter-item="{{ tag_match }}" style="flex:none;width:296px;scroll-snap-align:start">
+        {%- render 'product-card', product: product -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product shelf",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Roasted in small batches, no fillers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The full shelf" },
+    { "type": "collection", "id": "collection", "label": "Collection to pull from" },
+    { "type": "range", "id": "limit", "label": "Max products", "min": 4, "max": 24, "step": 1, "default": 16 }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter chip",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "tag", "label": "Product tag to match" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "filter", "settings": { "label": "Mil Baith Ke", "tag": "mil-baith-ke" } },
+      { "type": "filter", "settings": { "label": "Poshan Ka Pitara", "tag": "poshan-ka-pitara" } },
+      { "type": "filter", "settings": { "label": "Mehmaan Nawazi", "tag": "mehmaan-nawazi" } },
+      { "type": "filter", "settings": { "label": "Sehat Ki Baatein", "tag": "sehat-ki-baatein" } }
+    ]
+  },
+  "presets": [{ "name": "Product shelf" }]
+}
+{% endschema %}

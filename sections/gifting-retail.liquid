@@ -1,0 +1,89 @@
+<div data-tabpanel="gifting" data-tabpanel-key="retail">
+
+  <section style="padding:80px 0 40px">
+    <div class="wrap">
+      <div class="rv" style="max-width:600px;margin-bottom:34px">
+        <div class="yk-kicker" style="color:var(--o)">Ready to send, today</div>
+        <h2 style="font-size:clamp(34px,4.4vw,64px);margin:4px 0 14px">Hampers you can just buy</h2>
+        <p style="font-size:17px;line-height:1.7;color:rgba(23,87,45,.8);margin:0 0 12px">Packed, sleeved and boxed. Add a handwritten card at checkout and we send it straight to their address.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px" class="yk-grid-3">
+        {%- for block in section.blocks -%}
+          <article class="yk-card" style="border-radius:22px">
+            <div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:{{ block.settings.color }}14">
+              {%- if block.settings.image != blank -%}<img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.name | escape }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">{%- endif -%}
+              <div class="yk-card__badge" style="background:{{ block.settings.color }}">{{ block.settings.badge }}</div>
+            </div>
+            <div style="padding:22px">
+              <div class="yk-card__eyebrow" style="color:{{ block.settings.color }}">{{ block.settings.format }}</div>
+              <h3 style="font-size:29px;margin:8px 0 8px">{{ block.settings.name }}</h3>
+              <p style="font-size:14.5px;line-height:1.6;color:rgba(23,87,45,.7);margin:0 0 14px">{{ block.settings.body }}</p>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px;padding-top:14px;border-top:1px solid rgba(23,87,45,.1)">
+                {%- assign contents = block.settings.contents | split: ',' -%}
+                {%- for c in contents -%}
+                  <div style="display:flex;gap:9px;align-items:center"><span class="badge-dot" style="background:{{ block.settings.color }}"></span><span style="font-size:13.5px;color:rgba(23,87,45,.75)">{{ c | strip }}</span></div>
+                {%- endfor -%}
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:25px">{{ block.settings.price }}</span>
+                <a href="{{ pages.support.url | default: '#' }}" class="btn btn-sm" style="background:{{ block.settings.color }};color:#fff">Enquire</a>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:60px 0 90px">
+    <div class="wrap" style="background:var(--y);border-radius:28px;padding:52px 44px;position:relative;overflow:hidden">
+      <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:var(--cream);opacity:.32;right:-70px;top:-90px;animation:drift 9s ease-in-out infinite"></div>
+      <div style="position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center" class="yk-grid-2">
+        <div>
+          <div class="yk-kicker" style="color:var(--p)">Or make it yourself</div>
+          <h2 style="font-size:clamp(32px,4vw,58px);margin:4px 0 14px">Build a gift box</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:rgba(23,87,45,.8);margin:0 0 24px;max-width:440px">Pick the format, choose the jars, add a card. Same box, your combination.</p>
+          <a href="{{ routes.root_url }}#box" class="btn btn-primary">Start a box</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px" class="yk-grid-3">
+          {%- assign addons = 'Handwritten card:Written, not printed,No invoice inside:Price stays with you,Printed sleeve:Four brand colours,Cavity insert:For a card or sachet,Direct dispatch:Straight to their address,Date scheduling:Arrives on the day' | split: ',' -%}
+          {%- for a in addons -%}
+            {%- assign parts = a | split: ':' -%}
+            <div style="background:var(--cream);border-radius:15px;padding:16px">
+              <div style="font-weight:700;font-size:13.5px">{{ parts[0] }}</div>
+              <div style="font-size:12px;color:rgba(23,87,45,.65);margin-top:4px">{{ parts[1] }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Gifting: retail",
+  "blocks": [
+    { "type": "hamper", "name": "Hamper", "settings": [
+      { "type": "text", "id": "name", "label": "Name" },
+      { "type": "text", "id": "format", "label": "Format" },
+      { "type": "text", "id": "badge", "label": "Badge" },
+      { "type": "textarea", "id": "body", "label": "Description" },
+      { "type": "text", "id": "contents", "label": "Contents (comma separated)" },
+      { "type": "text", "id": "price", "label": "Price (display only)" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "color", "id": "color", "label": "Color", "default": "#19B1C1" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "hamper", "settings": { "name": "The Doorbell Box", "format": "4 jars, kappa box", "badge": "Most gifted", "body": "The dry fruit range in one box. What you hand over when you arrive somewhere.", "contents": "Salted Gold cashews, Simply Salted almonds, Pepper Pop cashews, Himalayan Bliss makhana", "price": "₹1,299", "color": "#19B1C1" } },
+      { "type": "hamper", "settings": { "name": "Diwali Ka Pitara", "format": "6 jars, kappa box", "badge": "Seasonal", "body": "Six jars across all four ranges, in a rigid box with a printed sleeve.", "contents": "Fiery Pop makhana, Smokin' Pop corn, Salted Gold cashews, Power Pods edamame, Berry Bliss muesli, Fruit Burst fruits", "price": "₹1,849", "color": "#663988" } },
+      { "type": "hamper", "settings": { "name": "The Desk Kit", "format": "4 jars, kappa box", "badge": "Joining kits", "body": "The protein and millet jars. What survives a week in a desk drawer.", "contents": "Power Pods edamame, Desi Kick edamame, Gulabi Glow rose millet, Pudina Punch millet", "price": "₹1,149", "color": "#663988" } }
+    ]
+  },
+  "presets": [{ "name": "Gifting: retail" }]
+}
+{% endschema %}

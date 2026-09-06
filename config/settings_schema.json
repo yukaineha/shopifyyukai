@@ -1,0 +1,34 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "YUKAI",
+    "theme_version": "1.0.0",
+    "theme_author": "YUKAI Foods",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_green", "label": "Green (primary)", "default": "#17572D" },
+      { "type": "color", "id": "color_yellow", "label": "Yellow", "default": "#EEBF25" },
+      { "type": "color", "id": "color_purple", "label": "Purple", "default": "#663988" },
+      { "type": "color", "id": "color_orange", "label": "Orange", "default": "#E06126" },
+      { "type": "color", "id": "color_teal", "label": "Teal", "default": "#19B1C1" },
+      { "type": "color", "id": "color_cream", "label": "Cream", "default": "#FFFAF3" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram_url", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook_url", "label": "Facebook" }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold (₹)", "default": 799 }
+    ]
+  }
+]

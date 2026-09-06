@@ -1,0 +1,37 @@
+<section style="padding:44px 0 80px">
+  <div class="wrap">
+    <div class="yk-breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span style="font-weight:700;color:var(--ink)">Account</span></div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px">
+      <div>
+        <div class="yk-kicker" style="color:var(--p)">Hi, {{ customer.first_name | default: customer.email }}</div>
+        <h1 style="font-size:clamp(38px,5vw,64px);margin-top:4px">Your account</h1>
+      </div>
+      <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <a href="{{ routes.account_addresses_url }}" class="btn btn-outline btn-sm">Manage addresses</a>
+        {%- form 'customer_logout' -%}<button type="submit" class="btn btn-outline btn-sm">Sign out</button>{%- endform -%}
+      </div>
+    </div>
+
+    <h2 style="font-size:26px;margin-bottom:16px">Order history</h2>
+    {%- if customer.orders.size == 0 -%}
+      <div style="border:1.5px dashed rgba(23,87,45,.2);border-radius:20px;padding:50px;text-align:center">
+        <p style="color:rgba(23,87,45,.65);margin:0 0 18px">No orders yet.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Shop all flavours</a>
+      </div>
+    {%- else -%}
+      <div style="border:1px solid rgba(23,87,45,.1);border-radius:20px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;padding:14px 20px;background:var(--cream);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(23,87,45,.55)">
+          <div>Order</div><div>Date</div><div>Payment</div><div>Total</div>
+        </div>
+        {%- for order in customer.orders -%}
+          <a href="{{ order.customer_url }}" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;padding:16px 20px;border-top:1px solid rgba(23,87,45,.08);color:var(--ink)">
+            <div style="font-weight:700">{{ order.name }}</div>
+            <div>{{ order.created_at | date: "%d %b %Y" }}</div>
+            <div>{{ order.financial_status_label }}</div>
+            <div style="font-weight:700">{{ order.total_price | money }}</div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>

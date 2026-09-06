@@ -1,0 +1,64 @@
+<section style="background:var(--cream);padding:100px 0">
+  <div class="wrap">
+    <div class="rv" style="display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:32px;flex-wrap:wrap">
+      <h2 class="yk-h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.blog != blank -%}
+        <a href="{{ section.settings.blog.url }}" style="font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid var(--o);padding-bottom:3px">All stories</a>
+      {%- endif -%}
+    </div>
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:16px" class="yk-grid-3">
+      {%- assign articles = section.settings.blog.articles -%}
+      {%- if articles.size > 0 -%}
+        {%- for article in articles limit: 3 -%}
+          <a href="{{ article.url }}" class="rv" style="display:block;background:#fff;border-radius:20px;overflow:hidden">
+            <div style="aspect-ratio:16/10;overflow:hidden">{%- if article.image -%}<img src="{{ article.image | image_url: width: 800 }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">{%- endif -%}</div>
+            <div style="padding:22px">
+              <div style="font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--o)">{{ article.tags.first | default: "Journal" }}</div>
+              <h3 style="font-size:25px;margin:9px 0 7px;line-height:1.08">{{ article.title }}</h3>
+              <div style="font-size:13px;color:rgba(23,87,45,.6)">{{ article.published_at | date: "%d %b %Y" }}</div>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.link | default: '#' }}" class="rv" style="display:block;background:#fff;border-radius:20px;overflow:hidden">
+            <div style="aspect-ratio:16/10;overflow:hidden">{%- if block.settings.image != blank -%}<img src="{{ block.settings.image | image_url: width: 800 }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">{%- endif -%}</div>
+            <div style="padding:22px">
+              <div style="font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:{{ block.settings.color }}">{{ block.settings.kicker }}</div>
+              <h3 style="font-size:25px;margin:9px 0 7px;line-height:1.08">{{ block.settings.title }}</h3>
+              <div style="font-size:13px;color:rgba(23,87,45,.6)">{{ block.settings.read }}</div>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pairings & recipes",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pairings & recipes" },
+    { "type": "blog", "id": "blog", "label": "Blog (used if it has articles)" }
+  ],
+  "blocks": [
+    { "type": "post", "name": "Placeholder post", "settings": [
+      { "type": "text", "id": "kicker", "label": "Kicker" },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "text", "id": "read", "label": "Read time" },
+      { "type": "url", "id": "link", "label": "Link" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "color", "id": "color", "label": "Color", "default": "#663988" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "post", "settings": { "kicker": "Pairings", "title": "What to serve with filter coffee at 7am", "read": "4 min read", "color": "#663988" } },
+      { "type": "post", "settings": { "kicker": "Recipe", "title": "Chatpat chaat in five minutes", "read": "3 min read", "color": "#17572D" } },
+      { "type": "post", "settings": { "kicker": "Guide", "title": "Makhana, ranked by heat", "read": "6 min read", "color": "#E06126" } }
+    ]
+  },
+  "presets": [{ "name": "Pairings & recipes" }]
+}
+{% endschema %}
