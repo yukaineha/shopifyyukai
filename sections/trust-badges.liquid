@@ -1,0 +1,31 @@
+<div style="border-bottom:1px solid rgba(23,87,45,.1)">
+  <div class="wrap yk-grid-4" style="padding-top:22px;padding-bottom:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+    {%- for block in section.blocks -%}
+      <div class="rv" style="display:flex;gap:13px;align-items:center">
+        <div class="badge-dot" style="background:{{ block.settings.color }}"></div>
+        <div style="font-weight:700;font-size:13.5px">{{ block.settings.title }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust badges",
+  "blocks": [
+    { "type": "badge", "name": "Badge", "settings": [
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "color", "id": "color", "label": "Dot color", "default": "#17572D" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "badge", "settings": { "title": "FSSAI certified", "color": "#17572D" } },
+      { "type": "badge", "settings": { "title": "Lab tested batches", "color": "#19B1C1" } },
+      { "type": "badge", "settings": { "title": "Roasted, never fried", "color": "#E06126" } },
+      { "type": "badge", "settings": { "title": "Ships pan-India", "color": "#663988" } }
+    ]
+  },
+  "presets": [{ "name": "Trust badges" }]
+}
+{% endschema %}

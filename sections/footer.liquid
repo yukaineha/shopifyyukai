@@ -1,0 +1,68 @@
+<footer class="yk-footer">
+  <div class="wrap" style="padding-left:0;padding-right:0">
+    <div class="yk-footer__top">
+      <div>
+        {%- if section.settings.logo != blank -%}
+          <img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" style="height:76px;display:block;margin-bottom:20px">
+        {%- else -%}
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:30px;margin-bottom:20px">{{ shop.name }}</div>
+        {%- endif -%}
+        <p style="margin:0 0 16px;font-size:14.5px;line-height:1.65;color:rgba(255,250,243,.7);max-width:290px">{{ section.settings.tagline }}</p>
+        {%- if section.settings.instagram_url != blank -%}
+          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;color:rgba(255,250,243,.85);font-size:14px;font-weight:600">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"></circle></svg>
+            {{ section.settings.instagram_handle }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="yk-footer__col-wrap">
+          <h4>{{ block.settings.title }}</h4>
+          <div class="yk-footer__col">
+            {%- for link in block.settings.menu.links -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="yk-footer__bottom">
+      <div>{{ section.settings.copyright }}</div>
+      <div style="display:flex;gap:18px">
+        <a href="{{ pages.terms.url | default: '#' }}">Terms</a>
+        <a href="{{ pages.returns.url | default: '#' }}">Returns</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (cream)" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Roasted, never fried. Made in Ahmedabad, shipped across India." },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "text", "id": "instagram_handle", "label": "Instagram handle", "default": "@yukaifoodroots" },
+    { "type": "text", "id": "copyright", "label": "Copyright line", "default": "© 2026 YUKAI Foods. FSSAI licensed. Made in Ahmedabad, India." }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "column", "settings": { "title": "Shop" } },
+      { "type": "column", "settings": { "title": "Company" } },
+      { "type": "column", "settings": { "title": "Help" } }
+    ]
+  }
+}
+{% endschema %}

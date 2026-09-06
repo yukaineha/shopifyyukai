@@ -1,0 +1,45 @@
+<section id="faq" style="padding:100px 0">
+  <div class="wrap" style="max-width:880px">
+    <div class="rv" style="text-align:center;margin-bottom:30px">
+      <div class="yk-kicker" style="color:var(--o)">{{ section.settings.kicker }}</div>
+      <h2 class="yk-h2" style="margin-top:4px">{{ section.settings.heading }}</h2>
+    </div>
+    <div data-acc-group>
+      {%- for block in section.blocks -%}
+        <div class="yk-acc-item">
+          <button type="button" class="yk-acc-btn" data-acc-toggle>
+            <span class="yk-acc-q">{{ block.settings.question }}</span>
+            <span class="yk-acc-plus">+</span>
+          </button>
+          <div class="yk-acc-panel"><p>{{ block.settings.answer }}</p></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "What people ask us most" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Healthy snacking, answered" }
+  ],
+  "blocks": [
+    { "type": "faq", "name": "Question", "settings": [
+      { "type": "text", "id": "question", "label": "Question" },
+      { "type": "textarea", "id": "answer", "label": "Answer" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "faq", "settings": { "question": "Are YUKAI snacks roasted or fried?", "answer": "Every jar is dry roasted or air roasted in small batches. No palm oil, no deep frying, no maida coating." } },
+      { "type": "faq", "settings": { "question": "Which is the healthiest Indian snack for evening hunger?", "answer": "Roasted makhana is the usual answer. A 30 g serve of our peri peri makhana is about 104 kcal with no added oil." } },
+      { "type": "faq", "settings": { "question": "What is the best high protein snack for the gym?", "answer": "Power Pods protein edamame carries 13 g of protein in a 30 g serve, the highest in our range." } },
+      { "type": "faq", "settings": { "question": "How long does a jar stay fresh?", "answer": "Nine months unopened. Once opened, the screw lid keeps it crunchy for about three weeks." } },
+      { "type": "faq", "settings": { "question": "Do you ship across India?", "answer": "Pan-India. Metro orders placed before 2pm dispatch the same day, most pincodes receive in 2 to 5 working days." } }
+    ]
+  },
+  "presets": [{ "name": "FAQ" }]
+}
+{% endschema %}

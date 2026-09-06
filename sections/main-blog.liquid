@@ -1,0 +1,58 @@
+<section style="padding:44px 0 30px">
+  <div class="wrap">
+    <div class="yk-breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span style="font-weight:700;color:var(--ink)">Journal</span></div>
+    <div class="yk-kicker" style="color:var(--p)">{{ section.settings.kicker }}</div>
+    <h1 style="font-size:clamp(38px,5vw,72px);margin:4px 0 14px">{{ blog.title }}</h1>
+    <p style="font-size:16.5px;line-height:1.65;color:rgba(23,87,45,.75);max-width:620px;margin:0">{{ section.settings.subheading }}</p>
+  </div>
+</section>
+
+{%- if blog.articles.size > 0 -%}
+  {%- assign lead = blog.articles.first -%}
+  <section style="padding:0 0 40px">
+    <div class="wrap">
+      <a href="{{ lead.url }}" class="rv yk-grid-2" style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);border-radius:24px;overflow:hidden;background:var(--cream)">
+        <div style="aspect-ratio:16/10;overflow:hidden">{%- if lead.image -%}<img src="{{ lead.image | image_url: width: 1200 }}" alt="{{ lead.title | escape }}" style="width:100%;height:100%;object-fit:cover;display:block">{%- endif -%}</div>
+        <div style="padding:36px;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--p)">{{ lead.tags.first | default: "Featured" }}</div>
+          <h2 style="font-size:clamp(26px,2.9vw,40px);margin:12px 0 12px;line-height:1.08">{{ lead.title }}</h2>
+          <p style="font-size:15.5px;line-height:1.65;color:rgba(23,87,45,.75);margin:0 0 16px">{{ lead.excerpt | default: lead.content | strip_html | truncatewords: 26 }}</p>
+          <div style="font-size:12.5px;color:rgba(23,87,45,.55)">{{ lead.published_at | date: "%d %b %Y" }}</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section style="padding:0 0 80px">
+    <div class="wrap yk-grid-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px">
+      {%- for article in blog.articles offset: 1 -%}
+        <a href="{{ article.url }}" class="rv" style="text-align:left;border:1px solid rgba(23,87,45,.1);background:#fff;border-radius:20px;overflow:hidden;display:block">
+          <div style="aspect-ratio:16/10;overflow:hidden">{%- if article.image -%}<img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.title | escape }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">{%- endif -%}</div>
+          <div style="padding:22px">
+            <div style="font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--o)">{{ article.tags.first | default: "Journal" }}</div>
+            <h3 style="font-size:23px;margin:9px 0 8px;line-height:1.15">{{ article.title }}</h3>
+            <p style="font-size:14.5px;line-height:1.6;color:rgba(23,87,45,.7);margin:0 0 14px">{{ article.excerpt | default: article.content | strip_html | truncatewords: 18 }}</p>
+            <div style="font-size:12.5px;color:rgba(23,87,45,.55)">{{ article.published_at | date: "%d %b %Y" }}</div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- else -%}
+  <section style="padding:60px 0 100px;text-align:center">
+    <div class="wrap">
+      <div class="yk-kicker" style="color:var(--o);margin-bottom:10px">Nothing published yet</div>
+      <p style="color:rgba(23,87,45,.65)">Write your first post from the Shopify admin under Online Store → Blog posts.</p>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Blog list",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Worth knowing before you snack" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Straight answers on makhana, protein, tiffin boxes and what to actually look for on a snack label." }
+  ]
+}
+{% endschema %}

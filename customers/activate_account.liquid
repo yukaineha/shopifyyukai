@@ -1,0 +1,13 @@
+<section style="padding:64px 0;display:flex;justify-content:center">
+  <div style="width:100%;max-width:440px;padding:0 20px">
+    <h1 style="font-size:clamp(30px,3.4vw,44px);margin-bottom:8px">Activate your account</h1>
+    <p style="color:rgba(23,87,45,.65);margin:0 0 26px">Set a password to finish creating your account.</p>
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}<div style="background:rgba(224,97,38,.08);color:var(--o);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:14px">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <input type="password" name="customer[password]" placeholder="Password" required style="width:100%;margin-bottom:12px;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:15px 16px">
+      <input type="password" name="customer[password_confirmation]" placeholder="Confirm password" required style="width:100%;margin-bottom:16px;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:15px 16px">
+      <button type="submit" name="accept" class="btn btn-primary" style="width:100%">Activate account</button>
+      <button type="submit" name="decline" class="btn btn-outline" style="width:100%;margin-top:10px">Decline invitation</button>
+    {%- endform -%}
+  </div>
+</section>

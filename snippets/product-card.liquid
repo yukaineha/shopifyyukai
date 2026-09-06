@@ -1,0 +1,44 @@
+{%- comment -%}
+  Renders one product tile. Accent color is derived from the product's range
+  tag (mil-baith-ke / poshan-ka-pitara / mehmaan-nawazi / sehat-ki-baatein)
+  so cards match the four-colour system from the design without a metafield.
+{%- endcomment -%}
+{%- liquid
+  assign accent = '#17572D'
+  if product.tags contains 'mil-baith-ke'
+    assign accent = '#EEBF25'
+  elsif product.tags contains 'poshan-ka-pitara'
+    assign accent = '#17572D'
+  elsif product.tags contains 'mehmaan-nawazi'
+    assign accent = '#19B1C1'
+  elsif product.tags contains 'sehat-ki-baatein'
+    assign accent = '#663988'
+  endif
+  assign badge = product.metafields.custom.badge | default: product.type
+-%}
+<article class="yk-card" style="--accent:{{ accent }}">
+  <a href="{{ product.url }}" class="yk-card__media" style="background:{{ accent }}14">
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 700 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="700" height="875">
+    {%- endif -%}
+    {%- if badge != blank -%}
+      <div class="yk-card__badge" style="background:{{ accent }}">{{ badge }}</div>
+    {%- endif -%}
+  </a>
+  <button type="button" class="yk-card__wish" data-wish-toggle="{{ product.handle }}" title="Save to wishlist">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4z"></path></svg>
+  </button>
+  <div class="yk-card__body">
+    <div class="yk-card__eyebrow" style="color:{{ accent }}">{{ product.type }}</div>
+    <h3 class="yk-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="yk-card__sub">{{ product.metafields.custom.subtitle | default: product.vendor }}</div>
+    <div class="yk-card__row">
+      <span class="yk-card__price">{{ product.price | money }}</span>
+      {%- if product.available -%}
+        <button type="button" class="yk-addbtn" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">Add</button>
+      {%- else -%}
+        <span class="yk-addbtn" style="opacity:.5;cursor:not-allowed">Sold out</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

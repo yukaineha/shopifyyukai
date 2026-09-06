@@ -1,0 +1,37 @@
+<section style="background:var(--cream);padding:80px 0">
+  <div class="wrap" style="max-width:880px">
+    <h2 class="rv" style="font-size:clamp(30px,3.6vw,52px);margin-bottom:26px;text-align:center">Gifting questions</h2>
+    <div data-acc-group>
+      {%- for block in section.blocks -%}
+        <div class="yk-acc-item">
+          <button type="button" class="yk-acc-btn" data-acc-toggle>
+            <span class="yk-acc-q" style="font-size:21px">{{ block.settings.question }}</span>
+            <span class="yk-acc-plus" style="color:var(--p)">+</span>
+          </button>
+          <div class="yk-acc-panel"><p>{{ block.settings.answer }}</p></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gifting FAQ",
+  "blocks": [
+    { "type": "faq", "name": "Question", "settings": [
+      { "type": "text", "id": "question", "label": "Question" },
+      { "type": "textarea", "id": "answer", "label": "Answer" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "faq", "settings": { "question": "What is the minimum order for custom branding?", "answer": "Two hundred and fifty units for a printed sleeve and lid sticker. Below that we can supply unbranded boxes with a blank card you print yourself." } },
+      { "type": "faq", "settings": { "question": "Can you ship to multiple addresses?", "answer": "Yes. Send a spreadsheet of names and addresses and we dispatch individually, with one consolidated invoice for you." } },
+      { "type": "faq", "settings": { "question": "Can I add a handwritten card?", "answer": "Yes, at checkout. Write the message in the box and we write it onto a card in the hamper rather than printing it." } },
+      { "type": "faq", "settings": { "question": "Will the price be visible to the recipient?", "answer": "No. Gift orders ship without an invoice in the box. The bill goes to your email only." } }
+    ]
+  },
+  "presets": [{ "name": "Gifting FAQ" }]
+}
+{% endschema %}

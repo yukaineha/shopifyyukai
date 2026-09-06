@@ -1,0 +1,33 @@
+<section style="padding:44px 0 90px">
+  <div class="wrap">
+    <div class="yk-breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span style="font-weight:700;color:var(--ink)">Search</span></div>
+    <h1 style="font-size:clamp(38px,5vw,64px);margin-bottom:20px">
+      {%- if search.performed -%}Results for "{{ search.terms }}"{%- else -%}Search{%- endif -%}
+    </h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" style="max-width:440px;margin-bottom:34px;position:relative">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search makhana, cashews, edamame" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:999px;padding:15px 44px 15px 20px;font-size:14.5px;color:var(--ink);outline:none">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" style="position:absolute;right:6px;top:6px;bottom:6px;border:none;background:var(--g);color:#fff;border-radius:999px;padding:0 18px;cursor:pointer">Go</button>
+    </form>
+
+    {%- if search.performed -%}
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px" class="yk-grid-4">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'product-card', product: item -%}
+          {%- else -%}
+            <a href="{{ item.url }}" class="yk-card" style="padding:18px 19px 20px;display:block">
+              <div style="font-weight:700;font-size:18px">{{ item.title }}</div>
+              <p style="font-size:14px;color:rgba(23,87,45,.65)">{{ item.content | strip_html | truncatewords: 18 }}</p>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if search.results_count == 0 -%}
+        <p style="color:rgba(23,87,45,.65)">Nothing matched that search. Try a broader term.</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}{ "name": "Search page", "settings": [] }{% endschema %}

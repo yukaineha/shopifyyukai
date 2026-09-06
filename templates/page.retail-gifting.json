@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "hero": { "type": "gifting-hero", "settings": {} },
+    "retail": { "type": "gifting-retail", "settings": {} },
+    "faq": { "type": "gifting-faq", "settings": {} }
+  },
+  "order": ["hero", "retail", "faq"]
+}

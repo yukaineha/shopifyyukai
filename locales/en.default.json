@@ -1,0 +1,16 @@
+{
+  "general": {
+    "meta": { "tags": "Tagged \"{{ tags }}\"" }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold out",
+      "add_to_cart": "Add to cart"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart"
+    }
+  }
+}

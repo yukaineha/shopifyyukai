@@ -1,0 +1,88 @@
+{%- liquid
+  assign accent = section.settings.accent_color
+  if collection.metafields.custom.accent_color != blank
+    assign accent = collection.metafields.custom.accent_color
+  endif
+-%}
+<section style="position:relative;overflow:hidden;background:{{ accent }};color:var(--cream)">
+  <div class="wrap yk-grid-2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.72fr);gap:44px;align-items:center;min-height:420px">
+    <div style="padding:56px 0">
+      <div class="yk-breadcrumb" style="opacity:.85;color:var(--cream)">
+        <a href="{{ routes.root_url }}" style="color:var(--cream)">Home</a><span>/</span><span style="font-weight:700">{{ collection.title }}</span>
+      </div>
+      <h1 style="font-size:clamp(46px,6vw,94px);margin:6px 0 16px;color:var(--cream)">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div style="max-width:560px;font-size:17px;line-height:1.65;opacity:.92;margin:0 0 26px">{{ collection.description }}</div>
+      {%- endif -%}
+      <div style="display:flex;gap:26px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:1">{{ collection.products_count }}</div>
+          <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:4px">flavours</div>
+        </div>
+      </div>
+    </div>
+    {%- if collection.image -%}
+      <div style="position:relative;align-self:stretch;min-height:340px">
+        <img src="{{ collection.image | image_url: width: 1200 }}" alt="{{ collection.title | escape }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,{{ accent }} 0%,rgba(0,0,0,0) 42%)"></div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<div style="border-bottom:1px solid rgba(23,87,45,.1);position:sticky;top:80px;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(14px)">
+  <div class="wrap" style="padding-top:16px;padding-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="{{ collection.url }}" class="chip {% unless current_tags %}is-active{% endunless %}">All</a>
+      {%- for tag in collection.all_tags -%}
+        {%- unless tag contains '-ke' or tag contains '-pitara' or tag contains '-nawazi' or tag contains '-baatein' -%}
+          <a href="{{ collection.url }}/{{ tag | handle }}" class="chip {% if current_tags contains tag %}is-active{% endif %}">{{ tag }}</a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="font-size:13px;color:rgba(23,87,45,.6)">{{ collection.products.size }} products</span>
+      <form method="get">
+        {%- for tag in current_tags -%}<input type="hidden" name="constraint" value="{{ tag }}">{%- endfor -%}
+        <select name="sort_by" onchange="this.form.submit()" style="border:1.5px solid rgba(23,87,45,.16);border-radius:999px;padding:11px 16px;font-size:12.5px;font-weight:600;color:var(--ink);background:#fff;cursor:pointer;outline:none">
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
+      </form>
+    </div>
+  </div>
+</div>
+
+<section style="padding:44px 0 90px">
+  <div class="wrap yk-grid-4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px">
+    {%- paginate collection.products by 24 -%}
+      {%- for product in collection.products -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if collection.products.size == 0 -%}
+      <div style="padding:70px 0;text-align:center">
+        <div class="yk-kicker" style="color:var(--o);margin-bottom:8px">Nothing here yet</div>
+        <a href="{{ collection.url }}" class="btn btn-outline">Show all</a>
+      </div>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <div class="wrap" style="display:flex;gap:8px;justify-content:center;margin-top:30px">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn-outline btn-sm">← Prev</a>{%- endif -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn-outline btn-sm">Next →</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Collection page",
+  "settings": [
+    { "type": "color", "id": "accent_color", "label": "Default banner color (used unless the collection sets its own)", "default": "#17572D" }
+  ]
+}
+{% endschema %}

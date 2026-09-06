@@ -1,0 +1,46 @@
+<section id="top" style="position:relative;height:min(88vh,860px);min-height:560px;overflow:hidden;background:#9ed4e8">
+  {%- if section.settings.image != blank -%}
+    <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.image.alt | escape }}" loading="eager" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite">
+  {%- else -%}
+    <img src="{{ 'banner-game-night.jpg' | asset_url }}" alt="YUKAI jars on a game night table" loading="eager" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite">
+  {%- endif -%}
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,45,25,.78) 0%,rgba(10,45,25,.42) 46%,rgba(10,45,25,.06) 78%)"></div>
+  <div class="wrap" style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;color:var(--cream);padding-left:0;padding-right:0">
+    <div style="max-width:660px;padding:0 34px">
+      <div style="display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,250,243,.4);border-radius:999px;padding:7px 15px;font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px">
+        <span style="position:relative;width:7px;height:7px">
+          <span style="position:absolute;inset:0;border-radius:50%;background:var(--y)"></span>
+          <span style="position:absolute;inset:0;border-radius:50%;background:var(--y);animation:pulse 2.4s ease-out infinite"></span>
+        </span>{{ section.settings.eyebrow }}
+      </div>
+      <h1 style="font-size:clamp(52px,7vw,104px);color:var(--cream)">{{ section.settings.heading }}</h1>
+      <p style="max-width:470px;font-size:17.5px;line-height:1.6;margin:22px 0 30px;color:rgba(255,250,243,.9)">{{ section.settings.body }}</p>
+      <div style="display:flex;gap:11px;flex-wrap:wrap">
+        {%- if section.settings.primary_link != blank -%}
+          <a href="{{ section.settings.primary_link }}" class="btn btn-accent">{{ section.settings.primary_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_link != blank -%}
+          <a href="{{ section.settings.secondary_link }}" class="btn btn-outline-invert">{{ section.settings.secondary_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff)"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Roasted, never fried" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Snacks worth sitting down together for." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Healthy Indian snacks, roasted never fried. Flavoured makhana, protein edamame, dry fruits, veg chips and muesli, seasoned like home and sealed in a jar that keeps the crunch." },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop all flavours" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Build your box" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link" }
+  ],
+  "presets": [{ "name": "Hero banner" }]
+}
+{% endschema %}

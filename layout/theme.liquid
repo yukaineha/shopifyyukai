@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  <meta name="robots" content="{% if current_page.title contains 'Search' %}noindex{% else %}index, follow{% endif %}">
+
+  <title>{{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400;12..96,75..100,600;12..96,75..100,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+</head>
+<body>
+
+  <div class="yk-ticker">
+    <div class="yk-ticker__track">
+      {%- assign ticker_items = 'Roasted, never fried,Free shipping over ₹799,FSSAI certified kitchen,Warning: highly snackable,Hampers from 250 units' | split: ',' -%}
+      {%- for i in (1..2) -%}
+        {%- for item in ticker_items -%}
+          <span class="yk-ticker__item">{{ item }}<span class="yk-ticker__dot">◆</span></span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {% section 'header' %}
+
+  <main id="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <div id="yk-cart-overlay" class="yk-cart-overlay">
+    <div class="yk-cart-scrim" data-cart-scrim></div>
+    <aside class="yk-cart-panel">
+      <div class="yk-cart-head">
+        <h3 style="font-size:27px">Your box</h3>
+        <button class="yk-cart-close" data-cart-close>✕</button>
+      </div>
+      <div id="yk-cart-lines" class="yk-cart-lines"></div>
+      <div class="yk-cart-foot">
+        <div style="display:flex;justify-content:space-between;font-size:14.5px;margin-bottom:16px">
+          <span style="color:rgba(23,87,45,.65)">Subtotal</span>
+          <span id="yk-cart-subtotal" style="font-weight:700">₹0</span>
+        </div>
+        <a href="{{ routes.cart_url }}" class="btn btn-primary" style="display:block;text-align:center">View cart</a>
+      </div>
+    </aside>
+  </div>
+
+  {{ 'global.js' | asset_url | script_tag }}
+</body>
+</html>

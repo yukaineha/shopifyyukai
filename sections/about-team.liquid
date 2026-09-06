@@ -1,0 +1,39 @@
+<section style="padding:70px 0">
+  <div class="wrap">
+    <h2 class="rv" style="font-size:clamp(28px,3.4vw,44px);margin-bottom:34px;text-align:center">{{ section.settings.heading }}</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px" class="yk-grid-3">
+      {%- for block in section.blocks -%}
+        <div class="rv" style="border-radius:20px;border:1px solid rgba(23,87,45,.1);padding:26px;background:{{ block.settings.color }}0d">
+          <div style="width:56px;height:56px;border-radius:50%;background:{{ block.settings.color }};color:#FFFAF3;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin-bottom:16px">{{ block.settings.initials }}</div>
+          <h3 style="font-size:22px;margin:0 0 3px">{{ block.settings.name }}</h3>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:{{ block.settings.color }};margin-bottom:12px">{{ block.settings.role }}</div>
+          <p style="font-size:14.5px;line-height:1.6;color:rgba(23,87,45,.75);margin:0">{{ block.settings.bio }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About team",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Who's behind the jar" }],
+  "blocks": [
+    { "type": "person", "name": "Person", "settings": [
+      { "type": "text", "id": "initials", "label": "Initials" },
+      { "type": "text", "id": "name", "label": "Name" },
+      { "type": "text", "id": "role", "label": "Role" },
+      { "type": "textarea", "id": "bio", "label": "Bio" },
+      { "type": "color", "id": "color", "label": "Color", "default": "#17572D" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "person", "settings": { "initials": "PB", "name": "Prateek Bansal", "role": "Founder", "color": "#17572D", "bio": "Runs product and sourcing. Spends most weeks at the roasting kitchen in Ahmedabad, checking batches before they ship." } },
+      { "type": "person", "settings": { "initials": "SB", "name": "Swapnil Bansal", "role": "Founder", "color": "#E06126", "bio": "Runs operations and growth. Built the fulfilment network that gets a jar from Ahmedabad to anywhere in India." } },
+      { "type": "person", "settings": { "initials": "KB", "name": "Kailash Bansal", "role": "Mentor", "color": "#663988", "bio": "Three decades in food manufacturing. Sets the standard the kitchen is held to on sourcing and quality." } }
+    ]
+  },
+  "presets": [{ "name": "About team" }]
+}
+{% endschema %}

@@ -1,0 +1,141 @@
+{%- liquid
+  assign free_ship_threshold = section.settings.free_shipping_threshold | times: 100
+  assign remaining = free_ship_threshold | minus: cart.total_price
+  if remaining < 0
+    assign remaining = 0
+  endif
+  assign progress = cart.total_price | times: 100.0 | divided_by: free_ship_threshold
+  if progress > 100
+    assign progress = 100
+  endif
+-%}
+<section style="padding:40px 0 90px">
+  <div class="wrap">
+    <div class="yk-breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span style="font-weight:700;color:var(--ink)">Cart</span></div>
+
+    <div style="display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:34px">
+      <h1 style="font-size:clamp(40px,5vw,74px)">Your cart</h1>
+      <span class="yk-kicker" style="color:var(--o);padding-bottom:9px">{{ cart.item_count }} {% if cart.item_count == 1 %}jar inside{% else %}jars inside{% endif %}</span>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <div style="border:1.5px dashed rgba(23,87,45,.2);border-radius:24px;padding:80px 34px;text-align:center">
+        <div class="yk-kicker" style="color:var(--o);margin-bottom:10px">Nothing in here yet</div>
+        <h2 style="font-size:34px;margin-bottom:12px">An empty jar is a sad jar</h2>
+        <p style="font-size:16px;color:rgba(23,87,45,.65);margin:0 auto 26px;max-width:400px">Start with a bestseller or build a box.</p>
+        <div style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap">
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Shop all flavours</a>
+          <a href="{{ routes.root_url }}#box" class="btn btn-outline">Build a box</a>
+        </div>
+      </div>
+    {%- else -%}
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.46fr);gap:32px;align-items:start" class="yk-grid-2">
+
+        {%- form 'cart', cart -%}
+        <div>
+          <div style="display:grid;grid-template-columns:1fr 130px 120px 40px;gap:16px;padding:0 4px 12px;border-bottom:1px solid rgba(23,87,45,.16)">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(23,87,45,.5)">Product</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(23,87,45,.5)">Quantity</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(23,87,45,.5)">Total</div>
+            <div></div>
+          </div>
+
+          {%- for item in cart.items -%}
+            <div style="display:grid;grid-template-columns:1fr 130px 120px 40px;gap:16px;align-items:center;padding:20px 4px;border-bottom:1px solid rgba(23,87,45,.1)">
+              <div style="display:flex;gap:16px;align-items:center;min-width:0">
+                <a href="{{ item.url }}" style="width:82px;height:100px;border-radius:12px;overflow:hidden;flex:none;background:rgba(23,87,45,.06);display:block">
+                  {%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" style="width:100%;height:100%;object-fit:cover;display:block">{%- endif -%}
+                </a>
+                <div style="min-width:0">
+                  <h3 style="font-size:24px;margin:5px 0 3px"><a href="{{ item.url }}">{{ item.product.title }}</a></h3>
+                  <div style="font-size:13px;color:rgba(23,87,45,.6)">{{ item.variant.title }}</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;border:1.5px solid rgba(23,87,45,.16);border-radius:999px;padding:4px;width:fit-content">
+                <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" style="width:44px;border:none;text-align:center;font-weight:700;font-size:14px;color:var(--ink);outline:none">
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:800;font-size:21px">{{ item.final_line_price | money }}</div>
+                <div style="font-size:12px;color:rgba(23,87,45,.55);margin-top:3px">{{ item.final_price | money }} each</div>
+              </div>
+              <button type="submit" name="updates[{{ item.key }}]" value="0" title="Remove" style="width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(23,87,45,.14);background:#fff;cursor:pointer;color:rgba(23,87,45,.6);font-size:13px">✕</button>
+            </div>
+          {%- endfor -%}
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 4px 0;flex-wrap:wrap">
+            <a href="{{ routes.all_products_collection_url }}" style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--y);padding-bottom:3px">← Keep shopping</a>
+            <button type="submit" class="btn btn-outline btn-sm">Update cart</button>
+          </div>
+
+          <div style="margin-top:34px;border:1.5px solid rgba(23,87,45,.12);border-radius:20px;padding:24px">
+            <label style="display:block;font-weight:700;font-size:15.5px;margin-bottom:8px">Order note</label>
+            <textarea name="note" rows="3" placeholder="Delivery instructions or a gift message" style="width:100%;border:1.5px solid rgba(23,87,45,.16);border-radius:13px;padding:14px 16px;font-size:14.5px;color:var(--ink);outline:none;resize:vertical">{{ cart.note }}</textarea>
+          </div>
+        </div>
+        {%- endform -%}
+
+        <aside style="position:sticky;top:24px;background:var(--cream);border-radius:24px;padding:28px">
+          <h2 style="font-size:28px;margin-bottom:20px">Order summary</h2>
+
+          <div style="display:flex;flex-direction:column;gap:11px;padding-bottom:16px;border-bottom:1px solid rgba(23,87,45,.14)">
+            <div style="display:flex;justify-content:space-between;gap:14px;font-size:14.5px">
+              <span style="color:rgba(23,87,45,.7)">Subtotal ({{ cart.item_count }} items)</span>
+              <span style="font-weight:700">{{ cart.total_price | money }}</span>
+            </div>
+            {%- for discount in cart.cart_level_discount_applications -%}
+              <div style="display:flex;justify-content:space-between;gap:14px;font-size:14.5px">
+                <span style="color:rgba(23,87,45,.7)">{{ discount.title }}</span>
+                <span style="font-weight:700;color:var(--o)">− {{ discount.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div style="display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:18px 0 4px">
+            <span style="font-weight:700;font-size:15.5px">Total</span>
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:34px">{{ cart.total_price | money }}</span>
+          </div>
+          <div style="font-size:12px;color:rgba(23,87,45,.55);margin-bottom:20px">Inclusive of all taxes. Shipping calculated at checkout.</div>
+
+          {%- if free_ship_threshold > 0 -%}
+            <div style="height:6px;border-radius:999px;background:rgba(23,87,45,.12);overflow:hidden;margin-bottom:9px">
+              <div style="height:100%;width:{{ progress }}%;background:var(--g);border-radius:999px"></div>
+            </div>
+            <div class="yk-kicker" style="font-size:20px;color:var(--ink);margin-bottom:22px">
+              {%- if remaining == 0 -%}Free shipping unlocked{%- else -%}{{ remaining | money }} more for free shipping{%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <form data-discount-form method="get" style="display:flex;gap:8px;margin-bottom:8px">
+            <input type="text" name="code" placeholder="Discount code" style="flex:1;min-width:0;border:1.5px solid rgba(23,87,45,.16);border-radius:999px;padding:14px 18px;font-size:14px;color:var(--ink);background:#fff;outline:none">
+            <button type="submit" class="btn btn-outline btn-sm">Apply</button>
+          </form>
+          <div style="font-size:12px;color:rgba(23,87,45,.5);margin-bottom:18px">Applied automatically at checkout.</div>
+
+          <form action="{{ routes.cart_url }}" method="post">
+            <button type="submit" name="checkout" class="btn btn-primary" style="width:100%">Proceed to checkout</button>
+          </form>
+
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(23,87,45,.14)">
+            {%- assign assurances = 'Dispatched within 24 hours:#19B1C1,Sealed jars, returnable in 7 days:#663988,FSSAI certified kitchen:#17572D' | split: ',' -%}
+            {%- for a in assurances -%}
+              {%- assign parts = a | split: ':' -%}
+              <div style="display:flex;gap:10px;align-items:center">
+                <span class="badge-dot" style="width:6px;height:6px;background:{{ parts[1] }}"></span>
+                <span style="font-size:13px;color:rgba(23,87,45,.7)">{{ parts[0] }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+        </aside>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold (₹)", "default": 799 }
+  ]
+}
+{% endschema %}

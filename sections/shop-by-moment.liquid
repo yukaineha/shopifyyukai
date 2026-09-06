@@ -1,0 +1,107 @@
+<section id="cats" class="wrap" style="padding:100px 0 40px" data-story-rotate data-tabgroup="moment-{{ section.id }}">
+  <div class="rv" style="display:flex;align-items:flex-end;justify-content:space-between;gap:26px;margin-bottom:34px;flex-wrap:wrap">
+    <div>
+      <div class="yk-kicker" style="color:var(--o)">{{ section.settings.kicker }}</div>
+      <h2 class="yk-h2">{{ section.settings.heading }}</h2>
+    </div>
+    <p style="max-width:320px;font-size:15px;line-height:1.6;color:rgba(23,87,45,.65);margin:0">{{ section.settings.body }}</p>
+  </div>
+
+  <div class="rv yk-grid-2" style="display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,.68fr);gap:16px;align-items:stretch">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign fallback_img = ''
+        case forloop.index0
+          when 0
+            assign fallback_img = 'moment-milbaithke.jpg'
+          when 1
+            assign fallback_img = 'moment-poshankapitara.jpg'
+          when 2
+            assign fallback_img = 'moment-mehmaannawazi.jpg'
+          when 3
+            assign fallback_img = 'moment-sehatkibaatein.jpg'
+        endcase
+      -%}
+      <div data-tabpanel="moment-{{ section.id }}" data-tabpanel-key="{{ block.id }}" {% unless forloop.first %}hidden{% endunless %} style="position:relative;border-radius:26px;overflow:hidden;background:{{ block.settings.color }};min-height:600px;grid-column:1;grid-row:1">
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 22s ease-in-out infinite">
+        {%- elsif fallback_img != '' -%}
+          <img src="{{ fallback_img | asset_url }}" alt="{{ block.settings.title | escape }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 22s ease-in-out infinite">
+        {%- endif -%}
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,{{ block.settings.color }} 0%,{{ block.settings.color }}9e 30%,rgba(0,0,0,0) 62%)"></div>
+        <div style="position:absolute;top:24px;left:26px;display:flex;align-items:center;gap:11px;color:var(--cream)">
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:.2em">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <span style="width:34px;height:1px;background:rgba(255,250,243,.6)"></span>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase">{{ block.settings.tagline }}</span>
+        </div>
+        <div style="position:absolute;inset:auto 0 0 0;padding:34px 30px 30px;color:var(--cream)">
+          <div class="yk-kicker" style="font-size:25px;opacity:.95">{{ block.settings.story }}</div>
+          <h3 style="font-size:clamp(34px,4.2vw,62px);margin:6px 0 10px;color:var(--cream)">{{ block.settings.title }}</h3>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+            <p style="max-width:480px;font-size:15px;line-height:1.6;opacity:.92;margin:0">{{ block.settings.blurb }}</p>
+            {%- if block.settings.collection != blank -%}
+              <a href="{{ block.settings.collection.url }}" style="flex:none;background:var(--cream);color:{{ block.settings.color }};border-radius:999px;padding:14px 24px;font-weight:700;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase">Shop {{ block.settings.collection.products_count }} flavours</a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <div style="display:flex;flex-direction:column;gap:10px;grid-column:2;grid-row:1">
+      {%- for block in section.blocks -%}
+        <button type="button" data-tab="{{ block.id }}" class="yk-story-tab {% if forloop.first %}is-active{% endif %}" style="--tab-color:{{ block.settings.color }}">
+          <div style="display:flex;align-items:center;gap:14px">
+            <span class="badge-dot" style="width:11px;height:11px;background:{{ block.settings.color }}"></span>
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(20px,2vw,29px);letter-spacing:-.02em;line-height:1">{{ block.settings.title }}</span>
+          </div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:9px 0 0;padding-left:25px">
+            <span style="font-size:13px;opacity:.75">{{ block.settings.tagline }}</span>
+            {%- if block.settings.collection != blank -%}
+              <span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6">{{ block.settings.collection.products_count }} flavours</span>
+            {%- endif -%}
+          </div>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .yk-story-tab{flex:1;cursor:pointer;position:relative;overflow:hidden;text-align:left;border:1.5px solid rgba(23,87,45,.13);background:#fff;color:var(--ink);border-radius:20px;padding:20px 22px;font-family:var(--font-body);transition:background .4s,border-color .4s,color .4s}
+  .yk-story-tab.is-active{background:var(--tab-color);border-color:var(--tab-color);color:#fff}
+</style>
+
+{% schema %}
+{
+  "name": "Shop by moment",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Four colours, four moments" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by the moment" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Every range carries its own colour on the shelf. Pick a moment to see it." }
+  ],
+  "blocks": [
+    {
+      "type": "moment",
+      "name": "Moment",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "tagline", "label": "Tagline" },
+        { "type": "text", "id": "story", "label": "Story line (script font)" },
+        { "type": "textarea", "id": "blurb", "label": "Blurb" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "color", "id": "color", "label": "Color", "default": "#EEBF25" },
+        { "type": "collection", "id": "collection", "label": "Collection" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "moment", "settings": { "title": "Mil Baith Ke", "tagline": "Makhana & corn", "story": "Card night, third round, nobody leaving.", "blurb": "The jars that live in the middle of the table. Peri peri makhana, BBQ corn and pudina, refilled twice a night.", "color": "#EEBF25" } },
+      { "type": "moment", "settings": { "title": "Poshan Ka Pitara", "tagline": "Veg chips & fruits", "story": "Tiffin packed, one for the road.", "blurb": "Dehydrated fruit and chat masala veg. The box you send with them so they eat something real.", "color": "#17572D" } },
+      { "type": "moment", "settings": { "title": "Mehmaan Nawazi", "tagline": "Dry fruits", "story": "Doorbell rings. Good jar comes out.", "blurb": "Cashews and almonds worth putting in the nice bowl. Salted, black pepper, peri peri.", "color": "#19B1C1" } },
+      { "type": "moment", "settings": { "title": "Sehat Ki Baatein", "tagline": "Edamame, millet & muesli", "story": "7am, before the day makes demands.", "blurb": "Protein edamame, rose millet, strawberry muesli. The purple jars do the heavy lifting.", "color": "#663988" } }
+    ]
+  },
+  "presets": [{ "name": "Shop by moment" }]
+}
+{% endschema %}

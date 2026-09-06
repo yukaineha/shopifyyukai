@@ -1,0 +1,69 @@
+<section style="background:{{ section.settings.bg_color }};color:{{ section.settings.text_color }};padding:100px 0">
+  <div class="wrap">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:26px;flex-wrap:wrap;margin-bottom:40px">
+      <div class="rv">
+        <div class="yk-kicker" style="color:{{ section.settings.accent_color }}">{{ section.settings.kicker }}</div>
+        <h2 class="yk-h2" style="color:{{ section.settings.text_color }}">{{ section.settings.heading }}</h2>
+      </div>
+      <p style="font-size:13.5px;color:{{ section.settings.text_color }}99;max-width:320px;margin:0">{{ section.settings.note }}</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="display:grid;grid-template-columns:1.7fr 1fr 2.2fr 1fr 1.3fr;gap:16px;padding:0 4px 13px;border-bottom:1px solid {{ section.settings.text_color }}38">
+        {%- assign headers = 'Flavour,Energy,Protein & fibre,Fat,Best for' | split: ',' -%}
+        {%- for h in headers -%}
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:{{ section.settings.text_color }}99">{{ h }}</div>
+        {%- endfor -%}
+      </div>
+      {%- for block in section.blocks -%}
+        <div class="rv" style="display:grid;grid-template-columns:1.7fr 1fr 2.2fr 1fr 1.3fr;gap:16px;align-items:center;padding:15px 4px;border-bottom:1px solid {{ section.settings.text_color }}1c">
+          <div style="display:flex;align-items:center;gap:11px"><span class="badge-dot" style="background:{{ block.settings.color }}"></span><span style="font-family:var(--font-heading);font-weight:800;font-size:21px">{{ block.settings.name }}</span></div>
+          <div style="font-size:14.5px">{{ block.settings.kcal }}</div>
+          <div>
+            <div style="height:7px;border-radius:999px;background:{{ section.settings.text_color }}24;overflow:hidden">
+              <div class="barfill" style="height:100%;width:{{ block.settings.pct }}%;background:{{ block.settings.color }};border-radius:999px"></div>
+            </div>
+            <div style="font-size:11.5px;color:{{ section.settings.text_color }}99;margin-top:5px">{{ block.settings.protein }} protein · {{ block.settings.fibre }} fibre</div>
+          </div>
+          <div style="font-size:14.5px">{{ block.settings.fat }}</div>
+          <div style="font-size:13.5px;color:{{ section.settings.accent_color }}">{{ block.settings.best }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nutrition table",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Read the small print, we don't mind" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Per 30 g serve" },
+    { "type": "textarea", "id": "note", "label": "Note", "default": "Indicative values pending final lab reports. Swap in certified numbers before launch." },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#17572D" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFAF3" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#EEBF25" }
+  ],
+  "blocks": [
+    { "type": "row", "name": "Row", "settings": [
+      { "type": "text", "id": "name", "label": "Flavour name" },
+      { "type": "text", "id": "kcal", "label": "Energy (kcal)" },
+      { "type": "text", "id": "protein", "label": "Protein" },
+      { "type": "text", "id": "fibre", "label": "Fibre" },
+      { "type": "text", "id": "fat", "label": "Fat" },
+      { "type": "text", "id": "best", "label": "Best for" },
+      { "type": "range", "id": "pct", "label": "Bar fill %", "min": 0, "max": 100, "step": 1, "default": 50 },
+      { "type": "color", "id": "color", "label": "Bar color", "default": "#EEBF25" }
+    ]}
+  ],
+  "default": {
+    "blocks": [
+      { "type": "row", "settings": { "name": "Power Pods", "kcal": "128 kcal", "protein": "13 g", "fibre": "5 g", "fat": "4 g", "best": "Post-workout", "pct": 92, "color": "#663988" } },
+      { "type": "row", "settings": { "name": "Berry Bliss", "kcal": "134 kcal", "protein": "4 g", "fibre": "3 g", "fat": "4 g", "best": "Breakfast", "pct": 46, "color": "#663988" } },
+      { "type": "row", "settings": { "name": "Fiery Pop", "kcal": "104 kcal", "protein": "3 g", "fibre": "2 g", "fat": "3 g", "best": "Evening TV", "pct": 34, "color": "#EEBF25" } },
+      { "type": "row", "settings": { "name": "Salted Gold", "kcal": "176 kcal", "protein": "5 g", "fibre": "1 g", "fat": "14 g", "best": "Guests", "pct": 40, "color": "#19B1C1" } },
+      { "type": "row", "settings": { "name": "Fruit Burst", "kcal": "112 kcal", "protein": "1 g", "fibre": "4 g", "fat": "0 g", "best": "Kids' tiffin", "pct": 28, "color": "#7FBF6A" } }
+    ]
+  },
+  "presets": [{ "name": "Nutrition table" }]
+}
+{% endschema %}

@@ -1,0 +1,201 @@
+{%- liquid
+  assign accent = '#17572D'
+  if product.tags contains 'mil-baith-ke'
+    assign accent = '#EEBF25'
+  elsif product.tags contains 'poshan-ka-pitara'
+    assign accent = '#17572D'
+  elsif product.tags contains 'mehmaan-nawazi'
+    assign accent = '#19B1C1'
+  elsif product.tags contains 'sehat-ki-baatein'
+    assign accent = '#663988'
+  endif
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<section style="padding:26px 0 70px">
+  <div class="wrap">
+    <div class="yk-breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a><span>/</span>
+      {%- if product.collections.first -%}<a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a><span>/</span>{%- endif -%}
+      <span style="font-weight:700;color:var(--ink)">{{ product.title }}</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.88fr);gap:52px;align-items:start" class="yk-grid-2">
+
+      <div data-gallery>
+        <div style="position:relative;border-radius:24px;overflow:hidden;aspect-ratio:1;background:{{ accent }}14">
+          <img data-gallery-main src="{{ product.selected_or_first_available_variant.featured_image | default: product.featured_image | image_url: width: 1000 }}" alt="{{ product.title | escape }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          {%- if product.type != blank -%}
+            <div style="position:absolute;top:18px;left:18px;background:{{ accent }};color:var(--cream);border-radius:999px;padding:8px 15px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">{{ product.type }}</div>
+          {%- endif -%}
+          <button type="button" data-wish-toggle="{{ product.handle }}" title="Save to wishlist" style="position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,250,243,.94);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4z"></path></svg>
+          </button>
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px">
+            {%- for image in product.images limit: 4 -%}
+              <button type="button" data-gallery-thumb data-full="{{ image | image_url: width: 1000 }}" class="{% if forloop.first %}is-active{% endif %}" style="cursor:pointer;padding:0;border:1.5px solid rgba(23,87,45,.12);border-radius:14px;overflow:hidden;aspect-ratio:1;background:var(--cream)">
+                <img src="{{ image | image_url: width: 200 }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div>
+        {%- if product.collections.first -%}
+          <a href="{{ product.collections.first.url }}" style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:{{ accent }};margin-bottom:10px">{{ product.collections.first.title }}</a>
+        {%- endif -%}
+        <h1 style="font-size:clamp(40px,4.6vw,72px);margin-bottom:8px">{{ product.title }}</h1>
+        {%- if product.metafields.custom.subtitle != blank -%}
+          <div class="yk-kicker" style="font-size:26px;color:{{ accent }};margin-bottom:16px">{{ product.metafields.custom.subtitle }}</div>
+        {%- endif -%}
+
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <span style="color:var(--y);font-size:14px;letter-spacing:.16em">★★★★★</span>
+          <span style="font-size:13.5px;color:rgba(23,87,45,.65)">{{ product.metafields.custom.rating | default: "4.7" }} · {{ product.metafields.custom.review_count | default: "120" }} reviews</span>
+        </div>
+
+        <p style="font-size:17px;line-height:1.68;color:rgba(23,87,45,.8);margin:0 0 26px;max-width:520px">{{ product.description | strip_html | truncatewords: 55 }}</p>
+
+        {%- if product.tags.size > 0 -%}
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px">
+            {%- for tag in product.tags limit: 4 -%}
+              {%- unless tag contains '-ke' or tag contains '-pitara' or tag contains '-nawazi' or tag contains '-baatein' -%}
+                <span style="border:1px solid rgba(23,87,45,.16);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:600;color:rgba(23,87,45,.7)">{{ tag }}</span>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div data-product-form data-base-price="{{ current_variant.price }}">
+          {%- if product.variants.size > 1 -%}
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(23,87,45,.55);margin-bottom:10px">Pack size</div>
+            <div data-variant-group style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:26px">
+              {%- for variant in product.variants -%}
+                <button type="button" data-variant-select data-variant-id="{{ variant.id }}" data-variant-price="{{ variant.price }}" class="yk-variant-btn {% if variant == current_variant %}is-active{% endif %}" style="--accent:{{ accent }}">
+                  <div style="font-weight:700;font-size:14.5px">{{ variant.title }}</div>
+                  <div style="font-size:12px;opacity:.75;margin-top:2px">{{ variant.price | money }}</div>
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <span style="font-family:var(--font-heading);font-weight:800;font-size:38px" data-price-target>{{ current_variant.price | money }}</span>
+            </div>
+            <div data-qty-wrap style="display:flex;align-items:center;gap:4px;border:1.5px solid rgba(23,87,45,.16);border-radius:999px;padding:5px">
+              <button type="button" data-qty-dec style="width:32px;height:32px;border-radius:50%;border:none;background:var(--cream);cursor:pointer;color:var(--ink);font-size:15px">−</button>
+              <span data-qty-value style="min-width:26px;text-align:center;font-weight:700;font-size:14.5px">1</span>
+              <button type="button" data-qty-inc style="width:32px;height:32px;border-radius:50%;border:none;background:var(--cream);cursor:pointer;color:var(--ink);font-size:15px">+</button>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+            {%- if product.available -%}
+              <button type="button" data-add-to-cart data-variant-id="{{ current_variant.id }}" class="btn btn-primary" style="flex:1;min-width:200px">Add to cart · <span data-line-total>{{ current_variant.price | money }}</span></button>
+            {%- else -%}
+              <button type="button" class="btn btn-outline" style="flex:1;min-width:200px" disabled>Sold out</button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:18px;padding:18px 0 0;border-top:1px solid rgba(23,87,45,.12)">
+          {%- assign assurances = 'Cash on delivery available,Roasted, never fried,Ships pan-India' | split: ',' -%}
+          {%- assign assurance_colors = '#663988,#E06126,#19B1C1' | split: ',' -%}
+          {%- for a in assurances -%}
+            <div style="display:flex;gap:9px;align-items:center">
+              <span class="badge-dot" style="background:{{ assurance_colors[forloop.index0] }}"></span>
+              <span style="font-size:13px;color:rgba(23,87,45,.75)">{{ a }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- if product.metafields.custom.kcal != blank -%}
+<section style="background:{{ accent }};color:var(--cream);padding:70px 0">
+  <div class="wrap yk-grid-3" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px">
+    <div style="grid-column:span 2">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.8">Per 30 g serve</div>
+      <h2 style="font-size:clamp(30px,3.4vw,48px);margin-top:8px;color:var(--cream)">The numbers, on the front</h2>
+    </div>
+    <div style="border-left:1px solid rgba(255,250,243,.28);padding-left:20px">
+      <div style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:1">{{ product.metafields.custom.kcal }}</div>
+      <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:6px">kcal</div>
+    </div>
+    <div style="border-left:1px solid rgba(255,250,243,.28);padding-left:20px">
+      <div style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:1">{{ product.metafields.custom.protein }}</div>
+      <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:6px">protein</div>
+    </div>
+    <div style="border-left:1px solid rgba(255,250,243,.28);padding-left:20px">
+      <div style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:1">{{ product.metafields.custom.fibre }}</div>
+      <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:6px">fibre</div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+<section style="padding:80px 0">
+  <div class="wrap yk-grid-2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:52px">
+    <div>
+      <h2 style="font-size:clamp(28px,3.2vw,44px);margin-bottom:20px">How it's made</h2>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        {%- assign steps_t = 'Sourced graded, not mixed,Dry roasted in small lots,Seasoned warm,Sealed same day' | split: ',' -%}
+        {%- assign steps_d = 'We buy one grade so every jar behaves the same in the drum.,No oil bath. The drum runs until the seed puffs and holds.,Masala goes on while the batch is still hot so the coating sticks.,Straight into screw-lid jars so nothing sits and softens.' | split: ',' -%}
+        {%- for t in steps_t -%}
+          <div class="rv" style="display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid rgba(23,87,45,.1)">
+            <div style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:{{ accent }};flex:none;width:26px;padding-top:2px">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+            <div>
+              <div style="font-weight:700;font-size:16px">{{ t }}</div>
+              <div style="font-size:14.5px;line-height:1.6;color:rgba(23,87,45,.7);margin-top:4px">{{ steps_d[forloop.index0] }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div>
+      <h2 style="font-size:clamp(28px,3.2vw,44px);margin-bottom:20px">Details</h2>
+      <div data-acc-group>
+        {%- assign acc_q = 'Ingredients,Storage & shelf life,Allergens,Shipping & returns,Payment options' | split: ',' -%}
+        {%- assign acc_a = product.metafields.custom.ingredients | default: 'See the printed pack for full ingredients. No palm oil, no maida, no artificial colour.' -%}
+        {%- assign acc_answers = acc_a | append: '|Nine months unopened in a cool dry place. Once opened, the screw lid keeps it crunchy for about three weeks.|Packed in a facility that also handles tree nuts and oats.|Dispatched from Ahmedabad across India. Metro orders before 2pm ship the same day. Sealed jars can be returned within 7 days if unopened.|UPI, credit and debit cards, EMI and net banking. Cash on delivery available on most pincodes.' | split: '|' -%}
+        {%- for q in acc_q -%}
+          <div class="yk-acc-item">
+            <button type="button" class="yk-acc-btn" data-acc-toggle>
+              <span class="yk-acc-q" style="font-size:19px">{{ q }}</span>
+              <span class="yk-acc-plus" style="color:{{ accent }}">+</span>
+            </button>
+            <div class="yk-acc-panel"><p>{{ acc_answers[forloop.index0] }}</p></div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- assign related = product.collections.first.products | where_exp: "p", "p.id != product.id" -%}
+{%- if related.size > 0 -%}
+<section style="padding:80px 0 90px">
+  <div class="wrap" style="margin-bottom:26px">
+    <h2 style="font-size:clamp(30px,3.6vw,52px)">Goes well with</h2>
+  </div>
+  <div class="rail hide-scrollbar wrap" style="display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px">
+    {%- for rp in related limit: 8 -%}
+      <div style="flex:none;width:284px;scroll-snap-align:start">{%- render 'product-card', product: rp -%}</div>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+<style>
+  .yk-variant-btn{cursor:pointer;text-align:left;border:1.5px solid rgba(23,87,45,.16);background:#fff;color:var(--ink);border-radius:15px;padding:13px 17px;font-family:var(--font-body);transition:all .35s}
+  .yk-variant-btn.is-active{background:var(--accent);border-color:var(--accent);color:#fff}
+</style>
+
+{% schema %}
+{ "name": "Product page", "settings": [] }
+{% endschema %}
